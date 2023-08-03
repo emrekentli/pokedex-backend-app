@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: pokedex
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pokedex
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      #ddl-auto possible values: none, validate, update, create-drop
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8989
+default:
+  user:
+    email: admin
+    username: admin
+    password: 123

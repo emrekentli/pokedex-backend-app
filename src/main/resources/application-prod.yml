@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: pokedex
+  main:
+    allow-circular-references: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driverClassName: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${SPRING_DATASOURCE_CONNECTION:10}
+      connection-timeout: 2000 #ms
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      #ddl-auto possible values: none, validate, update, create-drop
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: false
+server:
+  port: 8989
+default:
+  user:
+    email: test@test.com
+    phone: 0123456789
+    password: tEsT123*#
