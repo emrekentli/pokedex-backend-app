@@ -1,9 +1,9 @@
 package com.obss.pokedex.domain.authentication.user.impl;
 
 import com.obss.pokedex.domain.authentication.role.api.RoleDto;
+import com.obss.pokedex.domain.authentication.role.impl.Role;
 import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
 import com.obss.pokedex.domain.authentication.user.api.UserDto;
-import com.obss.pokedex.domain.authentication.role.impl.Role;
 import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
 import com.obss.pokedex.domain.authentication.user.api.UserService;
 import com.obss.pokedex.library.util.PageUtil;

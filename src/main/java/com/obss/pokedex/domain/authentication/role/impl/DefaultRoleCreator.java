@@ -2,16 +2,9 @@ package com.obss.pokedex.domain.authentication.role.impl;
 
 import com.obss.pokedex.domain.authentication.role.api.RoleDto;
 import com.obss.pokedex.domain.authentication.role.api.RoleService;
-import com.obss.pokedex.domain.authentication.user.api.UserDto;
-import com.obss.pokedex.domain.authentication.user.impl.UserRepository;
-import com.obss.pokedex.domain.authentication.user.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 
 @Component

@@ -1,6 +1,5 @@
 package com.obss.pokedex.domain.authentication.user.api;
 
-import com.obss.pokedex.domain.authentication.user.api.UserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
