@@ -1,5 +1,6 @@
 package com.obss.pokedex.domain.pokemon.pokeapi.impl;
 
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDetailDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeApiClient;
 import com.obss.pokedex.library.feign.PokeApiFeignCallableApi;
@@ -29,5 +30,10 @@ public class PokeApiClientImpl implements PokeApiClient {
     @Override
     public GetPokemonDto getStats(int offset, int limit) {
         return callableApi.getStats(offset, limit);
+    }
+
+    @Override
+    public GetPokemonDetailDto getPokemonDetails(String pokemonName) {
+        return callableApi.getPokemon(pokemonName);
     }
 }

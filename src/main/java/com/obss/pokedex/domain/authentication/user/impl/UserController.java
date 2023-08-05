@@ -76,8 +76,35 @@ public class UserController extends BaseController {
                 .build();
         return respond(toPageResponse(service.filterUser(dto, pageable)));
     }
+    @GetMapping("/users/{id}/catch/{pokemonId}")
+    public Response<UserResponse> addPokemonToCatchlist(@PathVariable(value = "pokemonId") String pokemonId) {
+        UserDto user = service.addPokemonToCatchlist(pokemonId);
+        return respond(UserResponse.toResponse(user));
+    }
+
+    @DeleteMapping("/users/{id}/catch/{pokemonId}")
+    public Response<UserResponse> deletePokemonFromCatchlist(@PathVariable(value = "pokemonId") String pokemonId) {
+        UserDto user = service.deletePokemonFromCatchlist(pokemonId);
+        return respond(UserResponse.toResponse(user));
+    }
+
+    @GetMapping("/users/wish/{pokemonId}")
+    public Response<UserResponse> addPokemonToWishlist(@PathVariable(value = "pokemonId") String pokemonId) {
+        UserDto user = service.addPokemonToWishlist(pokemonId);
+        return respond(UserResponse.toResponse(user));
+    }
+
+    @DeleteMapping("/users/wish/{pokemonId}")
+    public Response<UserResponse> deletePokemonFromWishlist(@PathVariable(value = "pokemonId") String pokemonId) {
+        UserDto user = service.deletePokemonFromWishlist(pokemonId);
+        return respond(UserResponse.toResponse(user));
+    }
 
 
+    @GetMapping("/{id}")
+    public Response<UserResponse> getUserById(@PathVariable(value = "id") String id) {
+        return respond(UserResponse.toResponse(service.getUserDtoById(id)));
+    }
 
     private Page<UserResponse> toPageResponse(Page<UserDto> userDtos) {
         return PageUtil.pageToDto(userDtos, UserResponse::toResponse);

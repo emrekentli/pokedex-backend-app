@@ -6,6 +6,8 @@ import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
 import com.obss.pokedex.domain.authentication.user.api.UserDto;
 import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
 import com.obss.pokedex.domain.authentication.user.api.UserService;
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.library.util.PageUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final RoleServiceImpl roleService;
+    private final PokemonService pokemonService;
     private final UserRetrievalService userRetrievalService;
     @Override
     @Transactional
@@ -88,13 +91,61 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    @Override
+    public UserDto addPokemonToCatchlist( String pokemonId) {
+        PokemonDto pokemon = pokemonService.getById(pokemonId);
+        return repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> {
+                    user.getCatchList().add(pokemon.getId());
+                    return repository.save(user);
+                })
+                .map(this::toDto)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public UserDto addPokemonToWishlist(String pokemonId) {
+        PokemonDto pokemon = pokemonService.getById(pokemonId);
+        return repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> {
+                    user.getWishList().add(pokemon.getId());
+                    return repository.save(user);
+                })
+                .map(this::toDto)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public UserDto deletePokemonFromCatchlist(String pokemonId) {
+        PokemonDto pokemon = pokemonService.getById(pokemonId);
+        return repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> {
+                    user.getCatchList().remove(pokemon.getId());
+                    return repository.save(user);
+                })
+                .map(this::toDto)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public UserDto deletePokemonFromWishlist(String pokemonId) {
+        PokemonDto pokemon = pokemonService.getById(pokemonId);
+        return repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> {
+                    user.getWishList().remove(pokemon.getId());
+                    return repository.save(user);
+                })
+                .map(this::toDto)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+
     public User getUserByUserName(String username) {
         return repository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("Kayıt bulunamadı"));
     }
 
-    @Transactional
-    public User saveUser(User user) {
-        return repository.save(user);
+    public void saveUser(User user) {
+        repository.save(user);
     }
 
     public User toEntity(User user, UserDto dto) {

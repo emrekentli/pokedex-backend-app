@@ -34,10 +34,10 @@ public class Pokemon extends AbstractEntity {
     private Integer baseExperience;
 
     @Column(name = COL_HEIGHT)
-    private Integer height;
+    private Double height;
 
     @Column(name = COL_WEIGHT)
-    private Integer weight;
+    private Double weight;
 
     @Column(name = COL_IMAGE_URL)
     private String imageUrl;
@@ -56,11 +56,7 @@ public class Pokemon extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "ability_id"))
     private Set<Ability> abilities;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "pokemon_pokemon_stat",
-            joinColumns = @JoinColumn(name = "pokemon_id"),
-            inverseJoinColumns = @JoinColumn(name = "pokemon_stat_id"))
+    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PokemonStat> stats;
 
 }

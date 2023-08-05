@@ -19,4 +19,12 @@ public interface UserService {
     UserDto getByUserName(String userName);
 
     UserDto updateMyUser(UserDto dto);
+
+    UserDto addPokemonToCatchlist(String pokemonId);
+
+    UserDto addPokemonToWishlist(String pokemonId);
+
+    UserDto deletePokemonFromCatchlist(String pokemonId);
+
+    UserDto deletePokemonFromWishlist(String pokemonId);
 }

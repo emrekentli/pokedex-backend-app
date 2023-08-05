@@ -1,9 +1,12 @@
 package com.obss.pokedex.domain.pokemon.pokemonstat.impl;
 
 
+import com.obss.pokedex.domain.pokemon.pokemon.impl.Pokemon;
+import com.obss.pokedex.domain.pokemon.stat.impl.Stat;
 import com.obss.pokedex.library.entity.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +26,9 @@ public class PokemonStat extends AbstractEntity {
 
     @Column(name = COL_STAT_POINT)
     private Integer statPoint;
-    @Column(name = COL_STAT_ID)
-    private Integer statId;
+    @ManyToOne
+    private Stat stat;
 
+    @ManyToOne
+    private Pokemon pokemon;
 }

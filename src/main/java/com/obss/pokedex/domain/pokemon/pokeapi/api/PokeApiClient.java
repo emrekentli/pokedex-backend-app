@@ -7,5 +7,7 @@ public interface PokeApiClient {
 
     GetPokemonDto getTypes(int offset, int limit);
 
-    GetPokemonDto getStats(int i, int i1);
+    GetPokemonDto getStats(int offset, int limit);
+
+    GetPokemonDetailDto getPokemonDetails(String bulbasaur);
 }
