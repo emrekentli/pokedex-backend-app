@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,9 @@ public class User extends AbstractEntity {
     public static final String TABLE_USER_ROLE = "user_role";
     public static final String COL_ROLE_ID = "role_id";
     public static final String COL_USER_ID = "user_id";
+    public static final String COL_POKEMON_ID = "pokemon_id";
+
+
 
     @Column(name = COL_FULL_NAME)
     private  String fullName;
@@ -54,4 +58,12 @@ public class User extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = COL_ROLE_ID)
     )
     private Set<Role> roles;
+
+    @Column(name = COL_POKEMON_ID)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> catchList;
+
+    @Column(name = COL_POKEMON_ID)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> wishList;
 }
