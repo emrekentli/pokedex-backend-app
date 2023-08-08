@@ -60,7 +60,15 @@ public class PokemonServiceImpl implements PokemonService {
             pokemon.setBaseExperience(pokemonDetails.getBaseExperience());
             pokemon.setHeight(pokemonDetails.getHeight());
             pokemon.setWeight(pokemonDetails.getWeight());
-            pokemon.setImageUrl(pokemonDetails.getSprites().getOther().getDreamWorld().getFrontDefault());
+            if(pokemonDetails.getSprites().getOther().getDreamWorld().getFrontDefault() != null){
+                pokemon.setImageUrl(pokemonDetails.getSprites().getOther().getDreamWorld().getFrontDefault());
+            }
+            else if(pokemonDetails.getSprites().getOther().getOfficialArtwork().getFrontDefault() != null){
+                pokemon.setImageUrl(pokemonDetails.getSprites().getOther().getOfficialArtwork().getFrontDefault());
+            }
+            else{
+                pokemon.setImageUrl(pokemonDetails.getSprites().getFrontDefault());
+            }
             pokemon.setAbilities(abilityService.convertToAbilities(pokemonDetails.getAbilities()));
             pokemon.setStats(pokemonStatService.convertToStats(pokemonDetails.getStats(),pokemon));
             pokemon.setTypes(typeService.convertToTypes(pokemonDetails.getTypes()));
@@ -140,8 +148,7 @@ public class PokemonServiceImpl implements PokemonService {
     @Override
     public PokemonDto removeStat(String id, String statId) {
         Pokemon pokemon = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        Stat stat = statService.getEntityById(statId);
-        pokemon.getStats().remove(pokemonStatService.getPokemonStatByPokemonAndStat(pokemon,stat));
+        pokemon.getStats().remove(pokemonStatService.getPokemonStatByPokemonAndStat(statId));
         return toDto(repository.save(pokemon));
     }
 
@@ -170,9 +177,9 @@ public class PokemonServiceImpl implements PokemonService {
     private List<PokeNameDto> getAllPokemons() {
         List<PokeNameDto> allPokemons = new ArrayList<>();
         int offset = 0;
-        int limit = 100000;
+        int limit = 20;
         int totalPokemons = client.getPokemons(offset,limit).getCount();
-        while (offset < totalPokemons) {
+        while (offset < 20) {
             GetPokemonDto response = client.getPokemons(offset, limit);
             allPokemons.addAll(response.getResults());
             offset += limit;

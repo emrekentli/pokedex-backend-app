@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -57,6 +58,6 @@ public class Pokemon extends AbstractEntity {
     private Set<Ability> abilities;
 
     @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PokemonStat> stats;
+    private List<PokemonStat> stats;
 
 }

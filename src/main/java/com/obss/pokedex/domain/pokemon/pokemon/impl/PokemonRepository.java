@@ -11,17 +11,18 @@ import java.util.Optional;
 public interface PokemonRepository extends JpaRepository<Pokemon, String> {
     Optional<Pokemon> findPokemonByName(String name);
 
-    @Query("SELECT p FROM Pokemon p " +
+    @Query("SELECT DISTINCT p FROM Pokemon p " +
             "LEFT JOIN p.types t " +
             "LEFT JOIN p.abilities a " +
             "LEFT JOIN p.stats s " +
             "WHERE " +
-            "(:name IS NULL OR p.name = :name) AND " +
+            "(:name IS NULL OR UPPER(p.name) LIKE CONCAT('%', UPPER(:name), '%')) AND " +
             "(:baseExperience IS NULL OR p.baseExperience = :baseExperience) AND " +
             "(:height IS NULL OR p.height = :height) AND " +
             "(:weight IS NULL OR p.weight = :weight) AND " +
             "(:type IS NULL OR t.name = :type) AND " +
-            "(:ability IS NULL OR a.name = :ability) ")
+            "(:ability IS NULL OR UPPER(a.name) LIKE CONCAT('%', UPPER(:ability), '%')) ")
+
     Page<Pokemon> filterPokemons(
             @Param("name") String name,
             @Param("baseExperience") Integer baseExperience,
@@ -31,4 +32,7 @@ public interface PokemonRepository extends JpaRepository<Pokemon, String> {
             @Param("ability") String ability,
             Pageable pageable
     );
+
+
+
 }

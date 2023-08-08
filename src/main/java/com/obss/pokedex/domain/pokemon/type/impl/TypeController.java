@@ -19,37 +19,37 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TypeController extends BaseController {
     private final TypeService service;
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    
     @PostMapping
     public Response<TypeResponse> createType(@Valid @RequestBody TypeRequest request) {
         var type = service.createType(request.toDto());
         return respond(TypeResponse.toResponse(type));
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    
     @PutMapping("/{id}")
     public Response<TypeResponse> updateType(@Valid @PathVariable(name = "id") String id,
                                              @RequestBody TypeRequest request) {
         var type = service.updateType(id, request.toDto());
         return respond(TypeResponse.toResponse(type));
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    
     @DeleteMapping("/{id}")
     public Response<Void> deleteType(@PathVariable(name = "id") String id) {
         service.deleteType(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    
     @GetMapping
     public Response<PageResponse<TypeResponse>> getAll(Pageable pageable) {
         return respond(toPageResponse(service.getAll(pageable)));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    
     @GetMapping("/{id}")
     public Response<TypeResponse> getById(@PathVariable(value = "id") String id) {
         return respond(TypeResponse.toResponse(service.getById(id)));
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    
     @GetMapping("/filter")
     public Response<PageResponse<TypeResponse>> filterTypes(
             @RequestParam(required = false) String name,

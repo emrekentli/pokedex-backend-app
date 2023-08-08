@@ -21,20 +21,20 @@ public class PokemonStatServiceImpl implements PokemonStatService {
     private final PokemonStatRepository repository;
     private final StatServiceImpl statService;
 
-    public Set<PokemonStat> convertToStats(List<GetStatDto> stats, Pokemon pokemon) {
-        return stats.stream().map(stat -> convertToStat(stat,pokemon)).collect(Collectors.toSet());
+    public List<PokemonStat> convertToStats(List<GetStatDto> stats, Pokemon pokemon) {
+        return stats.stream().map(stat -> convertToStat(stat,pokemon)).toList();
     }
 
     private PokemonStat convertToStat(GetStatDto stat, Pokemon pokemon) {
-        var statEntity = repository.findPokemonStatByStat_NameAndPokemon_Name(stat.getStat().getName(),pokemon.getName()).orElse(new PokemonStat());
+        PokemonStat statEntity = new PokemonStat();
         statEntity.setStatPoint(stat.getBaseStat());
         statEntity.setStat(statService.findStatByName(stat.getStat().getName()));
         statEntity.setPokemon(pokemon);
         return statEntity;
     }
 
-    public Set<PokemonStatDto> toDtoList(Set<PokemonStat> stats) {
-        return stats.stream().map(this::toDto).collect(Collectors.toSet());
+    public List<PokemonStatDto> toDtoList(List<PokemonStat> stats) {
+        return stats.stream().map(this::toDto).toList();
     }
 
     private PokemonStatDto toDto(PokemonStat pokemonStat) {
@@ -54,7 +54,7 @@ public class PokemonStatServiceImpl implements PokemonStatService {
         return repository.save(pokemonStat);
     }
 
-    public PokemonStat getPokemonStatByPokemonAndStat(Pokemon pokemon, Stat stat) {
-        return repository.findPokemonStatByPokemonAndStat(pokemon,stat).orElseThrow(EntityNotFoundException::new);
+    public PokemonStat getPokemonStatByPokemonAndStat(String statId) {
+        return repository.findById(statId).orElseThrow(EntityNotFoundException::new);
     }
 }

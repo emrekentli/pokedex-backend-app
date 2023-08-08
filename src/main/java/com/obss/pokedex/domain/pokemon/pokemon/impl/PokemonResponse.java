@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,7 +24,7 @@ public class PokemonResponse {
     private final String imageUrl;
     private Set<TypeDto> types;
     private Set<AbilityDto> abilities;
-    private Set<PokemonStatDto> stats;
+    private List<PokemonStatDto> stats;
 
     public static PokemonResponse toResponse(PokemonDto dto) {
         return PokemonResponse.builder()
