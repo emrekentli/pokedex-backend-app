@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/pokemons")
@@ -19,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 public class PokemonController extends BaseController {
     private final PokemonService service;
 
-    @PostMapping
-    public Response<PokemonResponse> createPokemon(@Valid @RequestBody PokemonRequest request) {
-        var pokemon = service.createPokemon(request.toDto());
+    @PostMapping(consumes = {"multipart/form-data"})
+    public Response<PokemonResponse> createPokemon(@Valid @RequestPart("data") PokemonRequest request, @RequestPart("file") MultipartFile file ) {
+        var pokemon = service.createPokemon(request.toDto(), file);
         return respond(PokemonResponse.toResponse(pokemon));
     }
 

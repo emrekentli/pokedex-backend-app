@@ -9,9 +9,9 @@ import com.obss.pokedex.domain.pokemon.pokemon.api.AddStatDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.domain.pokemon.pokemonstat.impl.PokemonStatServiceImpl;
-import com.obss.pokedex.domain.pokemon.stat.impl.Stat;
 import com.obss.pokedex.domain.pokemon.stat.impl.StatServiceImpl;
 import com.obss.pokedex.domain.pokemon.type.impl.TypeServiceImpl;
+import com.obss.pokedex.library.util.FileUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,8 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public PokemonDto createPokemon(PokemonDto dto) {
+    public PokemonDto createPokemon(PokemonDto dto, MultipartFile file) {
+        dto.setImageUrl(FileUtil.transferFile(file));
         return toDto(repository.save(toEntity(new Pokemon(),dto)));
     }
 

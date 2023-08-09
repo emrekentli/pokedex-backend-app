@@ -20,7 +20,7 @@ public class PokemonDto {
     private final Integer baseExperience;
     private final Double height;
     private final Double weight;
-    private final String imageUrl;
+    private String imageUrl;
     private Set<TypeDto> types;
     private Set<AbilityDto> abilities;
     private List<PokemonStatDto> stats;

@@ -2,9 +2,10 @@ package com.obss.pokedex.domain.pokemon.pokemon.api;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface PokemonService {
-    PokemonDto createPokemon(PokemonDto dto);
+    PokemonDto createPokemon(PokemonDto dto, MultipartFile file);
 
     PokemonDto updatePokemon(String id, PokemonDto dto);
 
