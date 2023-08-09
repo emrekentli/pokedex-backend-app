@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController extends BaseController {
     private final UserService service;
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     public Response<UserResponse> createUser(@Valid @RequestBody UserRequest request) {
         var user = service.createUser(request.toDto());
         return respond(UserResponse.toResponse(user));
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public Response<UserResponse> updateUser(@Valid @PathVariable(name = "id") String id,
                                              @RequestBody UserRequest request) {
@@ -33,30 +31,25 @@ public class UserController extends BaseController {
         return respond(UserResponse.toResponse(user));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/my-user")
     public Response<UserResponse> updateMyUser(@Valid @RequestBody UserRequest request) {
         var user = service.updateMyUser(request.toDto());
         return respond(UserResponse.toResponse(user));
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public Response<Void> deleteUser(@PathVariable(name = "id") String id) {
         service.deleteUser(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public Response<PageResponse<UserResponse>> getAllUser(Pageable pageable) {
         return respond(toPageResponse(service.getAllUserPageable(pageable)));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/username/{userName}")
     public Response<UserResponse> getByUserName(@PathVariable(value = "userName") String userName) {
         return respond(UserResponse.toResponse(service.getByUserName(userName)));
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/filter")
     public Response<PageResponse<UserResponse>> filterUser(
             @RequestParam(required = false) String userName,
@@ -76,30 +69,29 @@ public class UserController extends BaseController {
                 .build();
         return respond(toPageResponse(service.filterUser(dto, pageable)));
     }
-    @GetMapping("/users/{id}/catch/{pokemonId}")
+    @PostMapping("/catch/{pokemonId}")
     public Response<UserResponse> addPokemonToCatchlist(@PathVariable(value = "pokemonId") String pokemonId) {
         UserDto user = service.addPokemonToCatchlist(pokemonId);
         return respond(UserResponse.toResponse(user));
     }
 
-    @DeleteMapping("/users/{id}/catch/{pokemonId}")
+    @DeleteMapping("/catch/{pokemonId}")
     public Response<UserResponse> deletePokemonFromCatchlist(@PathVariable(value = "pokemonId") String pokemonId) {
         UserDto user = service.deletePokemonFromCatchlist(pokemonId);
         return respond(UserResponse.toResponse(user));
     }
 
-    @GetMapping("/users/wish/{pokemonId}")
+    @PostMapping("/wish/{pokemonId}")
     public Response<UserResponse> addPokemonToWishlist(@PathVariable(value = "pokemonId") String pokemonId) {
         UserDto user = service.addPokemonToWishlist(pokemonId);
         return respond(UserResponse.toResponse(user));
     }
 
-    @DeleteMapping("/users/wish/{pokemonId}")
+    @DeleteMapping("/wish/{pokemonId}")
     public Response<UserResponse> deletePokemonFromWishlist(@PathVariable(value = "pokemonId") String pokemonId) {
         UserDto user = service.deletePokemonFromWishlist(pokemonId);
         return respond(UserResponse.toResponse(user));
     }
-
 
     @GetMapping("/{id}")
     public Response<UserResponse> getUserById(@PathVariable(value = "id") String id) {

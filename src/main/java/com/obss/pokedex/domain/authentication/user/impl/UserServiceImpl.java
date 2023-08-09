@@ -6,6 +6,8 @@ import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
 import com.obss.pokedex.domain.authentication.user.api.UserDto;
 import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
 import com.obss.pokedex.domain.authentication.user.api.UserService;
+import com.obss.pokedex.domain.email.api.EmailDto;
+import com.obss.pokedex.domain.email.api.EmailService;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.library.util.PageUtil;
@@ -28,10 +30,16 @@ public class UserServiceImpl implements UserService {
     private final RoleServiceImpl roleService;
     private final PokemonService pokemonService;
     private final UserRetrievalService userRetrievalService;
+    private final EmailService emailService;
     @Override
     @Transactional
     public UserDto createUser(UserDto dto) {
         User user = toEntity(new User(), dto);
+        emailService.sendEmail(EmailDto.builder()
+                .to(user.getEmail())
+                .subject("Welcome to Pokedex")
+                .text("Welcome to Pokedex!\n Your password is " + user.getPassword())
+                .build());
         return toDto(repository.save(user));
     }
 
@@ -58,8 +66,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserDto> filterUser(UserDto dto, Pageable pageable) {
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.STARTING);
-        return PageUtil.pageToDto(repository.findAll(Example.of(toEntity(new User(), dto),matcher), pageable), this::toDto);
+        return repository.filterUser(dto.getUserName(), dto.getFullName(), dto.getEmail(), dto.getPhoneNumber(), pageable)
+                .map(this::toDto);
     }
 
     public User getUserById(String id) {
@@ -94,6 +102,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto addPokemonToCatchlist( String pokemonId) {
         PokemonDto pokemon = pokemonService.getById(pokemonId);
+        checkIfPokemonExistsInCatchlist(pokemon);
         return repository.findById(userRetrievalService.getCurrentUserId())
                 .map(user -> {
                     user.getCatchList().add(pokemon.getId());
@@ -101,6 +110,21 @@ public class UserServiceImpl implements UserService {
                 })
                 .map(this::toDto)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    private void checkIfPokemonExistsInCatchlist(PokemonDto pokemon) {
+        if (repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> user.getCatchList().contains(pokemon.getId()))
+                .orElseThrow(EntityNotFoundException::new)) {
+            throw new IllegalArgumentException("Pokemon already exists in catchlist");
+        }
+    }
+    private void checkIfPokemonExistsInWishlist(PokemonDto pokemon) {
+        if (repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> user.getWishList().contains(pokemon.getId()))
+                .orElseThrow(EntityNotFoundException::new)) {
+            throw new IllegalArgumentException("Pokemon already exists in wishlist");
+        }
     }
 
     @Override
@@ -150,13 +174,19 @@ public class UserServiceImpl implements UserService {
 
     public User toEntity(User user, UserDto dto) {
         user.setUserName(dto.getUserName());
-        user.setPassword(dto.getPassword());
-        user.setActivity(dto.getActivity());
+        user.setPassword(randomPassword());
+        user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : null);
         return user;
+    }
+
+    private String randomPassword() {
+        //generate 6 digit random number
+        int randomPIN = (int) (Math.random() * 900000) + 100000;
+        return String.valueOf(randomPIN);
     }
 
     public UserDto toDto(User user) {

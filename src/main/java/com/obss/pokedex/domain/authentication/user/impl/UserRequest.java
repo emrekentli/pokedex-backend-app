@@ -10,22 +10,17 @@ import lombok.Data;
 public class UserRequest {
     @NotBlank(message = "UserName is required")
     private final String userName;
-    @NotBlank(message = "Password is required")
-    private final String password;
     private final String fullName;
     private final String email;
     private final String phoneNumber;
-    private final Boolean activity;
 
 
     public UserDto toDto() {
         return UserDto.builder()
                 .userName(userName)
-                .password(password)
                 .fullName(fullName)
                 .email(email)
                 .phoneNumber(phoneNumber)
-                .activity(activity)
                 .build();
     }
 }
