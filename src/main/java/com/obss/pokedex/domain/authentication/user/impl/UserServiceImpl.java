@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto createUser(UserDto dto) {
+        checkUserExists(dto.getEmail());
         User user = toEntity(new User(), dto);
         emailService.sendEmail(EmailDto.builder()
                 .to(user.getEmail())
@@ -113,6 +114,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkIfPokemonExistsInCatchlist(PokemonDto pokemon) {
+        var userx = repository.findById(userRetrievalService.getCurrentUserId())
+                .orElseThrow(EntityNotFoundException::new);
+
         if (repository.findById(userRetrievalService.getCurrentUserId())
                 .map(user -> user.getCatchList().contains(pokemon.getId()))
                 .orElseThrow(EntityNotFoundException::new)) {
@@ -205,7 +209,7 @@ public class UserServiceImpl implements UserService {
 
 
     public void checkUserExists(String userName) {
-        repository.findByUserName(userName)
+        repository.findByEmail(userName)
                 .ifPresent(u -> {
                     throw new IllegalArgumentException("User with userName " + userName + " already exist");
                 });
