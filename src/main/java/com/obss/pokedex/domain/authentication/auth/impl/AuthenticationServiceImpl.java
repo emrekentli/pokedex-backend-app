@@ -22,9 +22,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Value("${default.user.username}")
-    private String username;
-
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UserServiceImpl userService;
@@ -38,8 +35,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getId(), request.getPassword())
         );
-
-
         var token = jwtUtil.generateToken(userService.toDto(user));
         repository.save(user.getId(), token);
         return AuthenticationResponse.builder()

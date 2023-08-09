@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -160,9 +161,9 @@ public class PokemonServiceImpl implements PokemonService {
                 .height(pokemon.getHeight())
                 .weight(pokemon.getWeight())
                 .imageUrl(pokemon.getImageUrl())
-                .abilities(abilityService.toDtoList(pokemon.getAbilities()))
-                .stats(pokemonStatService.toDtoList(pokemon.getStats()))
-                .types(typeService.toDtoList(pokemon.getTypes()))
+                .abilities(pokemon.getAbilities() != null ? abilityService.toDtoList(pokemon.getAbilities()) : Set.of())
+                .stats(pokemon.getStats() != null ? pokemonStatService.toDtoList(pokemon.getStats()): List.of())
+                .types(pokemon.getTypes() != null ? typeService.toDtoList(pokemon.getTypes()) : Set.of())
                 .build();
     }
     private Pokemon toEntity(Pokemon pokemon, PokemonDto dto) {

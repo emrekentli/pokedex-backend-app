@@ -26,7 +26,6 @@ public class RestExceptionHandler extends BaseController {
 
     private final MessageSource messageSource;
 
-
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Response<MetaResponse> handleRequestForbiddenRequest(AccessDeniedException accessDeniedException,

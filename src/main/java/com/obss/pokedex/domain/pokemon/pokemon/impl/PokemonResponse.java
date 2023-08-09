@@ -22,9 +22,9 @@ public class PokemonResponse {
     private final Double height;
     private final Double weight;
     private final String imageUrl;
-    private Set<TypeDto> types;
-    private Set<AbilityDto> abilities;
-    private List<PokemonStatDto> stats;
+    private final Set<TypeDto> types;
+    private final Set<AbilityDto> abilities;
+    private final List<PokemonStatDto> stats;
 
     public static PokemonResponse toResponse(PokemonDto dto) {
         return PokemonResponse.builder()
