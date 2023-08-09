@@ -19,6 +19,7 @@ public class UserResponse {
     private final String phoneNumber;
     private final Boolean activity;
 
+
     public static UserResponse toResponse(UserDto dto) {
         return UserResponse.builder()
                 .id(dto.getId())

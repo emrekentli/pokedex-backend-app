@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface PokemonService {
     PokemonDto createPokemon(PokemonDto dto, MultipartFile file);
 
@@ -28,4 +30,9 @@ public interface PokemonService {
     PokemonDto addStat(String id, AddStatDto dto);
 
     PokemonDto removeStat(String id, String statId);
+
+    List<PokemonDto> getAllUserCatchlist(PokemonDto dto, String type, String ability);
+
+
+    List<PokemonDto> getAllUserWishlist(PokemonDto dto, String type, String ability);
 }

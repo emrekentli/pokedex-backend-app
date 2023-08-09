@@ -2,10 +2,7 @@ package com.obss.pokedex.domain.pokemon.pokemon.impl;
 
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
-import com.obss.pokedex.library.rest.BaseController;
-import com.obss.pokedex.library.rest.MetaResponse;
-import com.obss.pokedex.library.rest.PageResponse;
-import com.obss.pokedex.library.rest.Response;
+import com.obss.pokedex.library.rest.*;
 import com.obss.pokedex.library.util.PageUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pokemons")
@@ -100,8 +99,43 @@ public class PokemonController extends BaseController {
             PokemonDto pokemon = service.removeStat(id, statId);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @GetMapping("/catchlist")
+    public Response<DataResponse<PokemonResponse>> getAllUserCatchlist(@RequestParam(required = false) String name,
+                                                                       @RequestParam(required = false) String type,
+                                                                       @RequestParam(required = false) Double height,
+                                                                       @RequestParam(required = false) Double weight,
+                                                                       @RequestParam(required = false) String ability,
+                                                                       @RequestParam(required = false) Integer baseExperience,
+                                                                       Pageable pageable) {
+        PokemonDto dto = PokemonDto.builder()
+                .name(name)
+                .height(height)
+                .weight(weight)
+                .baseExperience(baseExperience)
+                .build();
+        return respond(toResponse(service.getAllUserCatchlist(dto,type,ability)));
+    }
+
+    @GetMapping("/wishlist")
+    public Response<DataResponse<PokemonResponse>> getAllUserWishlist(@RequestParam(required = false) String name,
+                                                                      @RequestParam(required = false) String type,
+                                                                      @RequestParam(required = false) Double height,
+                                                                      @RequestParam(required = false) Double weight,
+                                                                      @RequestParam(required = false) String ability,
+                                                                      @RequestParam(required = false) Integer baseExperience) {
+        PokemonDto dto = PokemonDto.builder()
+                .name(name)
+                .height(height)
+                .weight(weight)
+                .baseExperience(baseExperience)
+                .build();
+        return respond(toResponse(service.getAllUserWishlist(dto,type,ability)));
+    }
 
     private Page<PokemonResponse> toPageResponse(Page<PokemonDto> pokemons) {
         return PageUtil.pageToDto(pokemons, PokemonResponse::toResponse);
+    }
+    private List<PokemonResponse> toResponse(List<PokemonDto> pokemons) {
+        return pokemons.stream().map(PokemonResponse::toResponse).toList();
     }
 }

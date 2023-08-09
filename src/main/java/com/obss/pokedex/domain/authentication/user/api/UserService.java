@@ -1,5 +1,6 @@
 package com.obss.pokedex.domain.authentication.user.api;
 
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,4 +28,5 @@ public interface UserService {
     UserDto deletePokemonFromCatchlist(String pokemonId);
 
     UserDto deletePokemonFromWishlist(String pokemonId);
+
 }
