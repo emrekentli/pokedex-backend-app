@@ -156,17 +156,17 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public Page<PokemonDto> getAllUserCatchlistPageable(Pageable pageable) {
+    public List<PokemonDto> getAllUserCatchlist(PokemonDto dto, String type, String ability) {
         var user = userRetrievalService.getCurrentUserId();
         var catchlist = userService.getUserDtoById(user).getCatchList();
-        return repository.findAllByIdIn(catchlist,pageable).map(this::toDto);
+        return repository.findAllByIdIn(dto.getName(), dto.getBaseExperience(), dto.getHeight(), dto.getWeight(), type, ability, catchlist).stream().map(this::toDto).toList();
     }
 
     @Override
-    public Page<PokemonDto> getAllUserWishlistPageable(Pageable pageable) {
+    public List<PokemonDto> getAllUserWishlist(PokemonDto dto, String type, String ability) {
         var user = userRetrievalService.getCurrentUserId();
-        var wishlist = userService.getUserDtoById(user).getCatchList();
-        return repository.findAllByIdIn(wishlist,pageable).map(this::toDto);
+        var wishList = userService.getUserDtoById(user).getWishList();
+        return repository.findAllByIdIn(dto.getName(), dto.getBaseExperience(), dto.getHeight(), dto.getWeight(), type, ability, wishList).stream().map(this::toDto).toList();
     }
 
     private PokemonDto toDto(Pokemon pokemon) {
