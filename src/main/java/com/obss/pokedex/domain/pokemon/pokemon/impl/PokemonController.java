@@ -90,8 +90,8 @@ public class PokemonController extends BaseController {
     }
 
     @PostMapping("/{id}/stats")
-    public Response<PokemonResponse> addStat(@PathVariable(name = "id") String id,@RequestParam(value = "statId") String statId) {
-        PokemonDto pokemon = service.addStat(id, statId);
+    public Response<PokemonResponse> addStat(@PathVariable(name = "id") String id,@RequestBody AddStatRequest request) {
+        PokemonDto pokemon = service.addStat(id, request.toDto());
         return respond(PokemonResponse.toResponse(pokemon));
     }
 

@@ -5,6 +5,7 @@ import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDetailDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeApiClient;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeNameDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.AddStatDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.domain.pokemon.pokemonstat.impl.PokemonStatServiceImpl;
@@ -138,10 +139,9 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public PokemonDto addStat(String id, String statId) {
+    public PokemonDto addStat(String id, AddStatDto dto) {
         var pokemon = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        var stat = statService.getEntityById(statId);
-        pokemon.getStats().add(pokemonStatService.createPokemonStat(pokemon,stat));
+        pokemon.getStats().add(pokemonStatService.createPokemonStat(pokemon,dto));
         return toDto(repository.save(pokemon));
     }
 

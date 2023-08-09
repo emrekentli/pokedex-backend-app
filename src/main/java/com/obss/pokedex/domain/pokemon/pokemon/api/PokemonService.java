@@ -24,7 +24,7 @@ public interface PokemonService {
 
     PokemonDto removeAbility(String id, String abilityId);
 
-    PokemonDto addStat(String id, String statId);
+    PokemonDto addStat(String id, AddStatDto dto);
 
     PokemonDto removeStat(String id, String statId);
 }

@@ -10,4 +10,6 @@ public interface PokemonStatRepository extends JpaRepository<PokemonStat, String
     Optional<PokemonStat> findPokemonStatByStat_NameAndPokemon_Name(String name, String pokemonName);
 
     Optional<PokemonStat> findPokemonStatByPokemonAndStat(Pokemon pokemon, Stat stat);
+
+    boolean existsByPokemonAndStat(Pokemon pokemon, Stat entityById);
 }

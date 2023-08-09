@@ -1,6 +1,7 @@
 package com.obss.pokedex.domain.pokemon.pokemonstat.impl;
 
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetStatDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.AddStatDto;
 import com.obss.pokedex.domain.pokemon.pokemon.impl.Pokemon;
 import com.obss.pokedex.domain.pokemon.pokemonstat.api.PokemonStatDto;
 import com.obss.pokedex.domain.pokemon.pokemonstat.api.PokemonStatService;
@@ -11,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,11 +46,20 @@ public class PokemonStatServiceImpl implements PokemonStatService {
                 .build();
     }
 
-    public PokemonStat createPokemonStat(Pokemon pokemon, Stat stat) {
+    public PokemonStat createPokemonStat(Pokemon pokemon, AddStatDto dto) {
+        var stat = statService.getEntityById(dto.getStatId());
+        checkPokemonStatExists(pokemon, stat);
         var pokemonStat = new PokemonStat();
         pokemonStat.setPokemon(pokemon);
         pokemonStat.setStat(stat);
+        pokemonStat.setStatPoint(dto.getStatPoint());
         return repository.save(pokemonStat);
+    }
+
+    private void checkPokemonStatExists(Pokemon pokemon, Stat stat) {
+        if (repository.existsByPokemonAndStat(pokemon, stat)) {
+            throw new IllegalArgumentException("Pokemon stat already exists");
+        }
     }
 
     public PokemonStat getPokemonStatByPokemonAndStat(String statId) {
