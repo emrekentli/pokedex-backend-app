@@ -27,4 +27,8 @@ public interface PokemonService {
     PokemonDto addStat(String id, AddStatDto dto);
 
     PokemonDto removeStat(String id, String statId);
+
+    Page<PokemonDto> getAllUserCatchlistPageable(Pageable pageable);
+
+    Page<PokemonDto> getAllUserWishlistPageable(Pageable pageable);
 }

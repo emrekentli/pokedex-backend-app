@@ -14,11 +14,10 @@ import com.obss.pokedex.library.util.PageUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -31,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final PokemonService pokemonService;
     private final UserRetrievalService userRetrievalService;
     private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
     @Override
     @Transactional
     public UserDto createUser(UserDto dto) {
@@ -167,6 +167,13 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    public UserDto getCatchList() {
+        return repository.findById(userRetrievalService.getCurrentUserId())
+                .map(user -> {
+                    return toDto(user);
+                })
+                .orElseThrow(EntityNotFoundException::new);
+    }
 
     public User getUserByUserName(String username) {
         return repository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("Kayıt bulunamadı"));
@@ -178,7 +185,7 @@ public class UserServiceImpl implements UserService {
 
     public User toEntity(User user, UserDto dto) {
         user.setUserName(dto.getUserName());
-        user.setPassword(randomPassword());
+        user.setPassword(passwordEncoder.encode(randomPassword()));
         user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
@@ -204,6 +211,8 @@ public class UserServiceImpl implements UserService {
                 .activity(user.getActivity())
                 .roles(user.getRoles() != null ? user.getRoles().stream().map(Role::toDto).collect(Collectors.toSet()) : null)
                 .fullName(user.getFullName())
+                .catchList(user.getCatchList() != null ? user.getCatchList() : null)
+                .wishList(user.getWishList() != null ? user.getWishList() : null)
                 .build();
     }
 

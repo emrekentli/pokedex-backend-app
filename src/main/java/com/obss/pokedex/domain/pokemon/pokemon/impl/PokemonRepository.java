@@ -3,9 +3,11 @@ package com.obss.pokedex.domain.pokemon.pokemon.impl;
 import feign.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Range;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PokemonRepository extends JpaRepository<Pokemon, String> {
@@ -34,5 +36,5 @@ public interface PokemonRepository extends JpaRepository<Pokemon, String> {
     );
 
 
-
+    Page<Pokemon> findAllByIdIn(List<String> catchlist, Pageable pageable);
 }

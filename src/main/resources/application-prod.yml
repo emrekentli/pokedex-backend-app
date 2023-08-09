@@ -21,6 +21,6 @@ server:
   port: 8989
 default:
   user:
-    email: test@test.com
-    phone: 0123456789
-    password: tEsT123*#
+    email: admin
+    username: admin
+    password: 123

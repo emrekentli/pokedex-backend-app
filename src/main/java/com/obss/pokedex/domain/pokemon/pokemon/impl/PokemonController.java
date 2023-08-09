@@ -99,6 +99,15 @@ public class PokemonController extends BaseController {
             PokemonDto pokemon = service.removeStat(id, statId);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @GetMapping("/catchlist")
+    public Response<PageResponse<PokemonResponse>> getAllUserCatchlist(Pageable pageable) {
+        return respond(toPageResponse(service.getAllUserCatchlistPageable(pageable)));
+    }
+
+    @GetMapping("/wishlist")
+    public Response<PageResponse<PokemonResponse>> getAllUserWishlist(Pageable pageable) {
+        return respond(toPageResponse(service.getAllUserWishlistPageable(pageable)));
+    }
 
     private Page<PokemonResponse> toPageResponse(Page<PokemonDto> pokemons) {
         return PageUtil.pageToDto(pokemons, PokemonResponse::toResponse);

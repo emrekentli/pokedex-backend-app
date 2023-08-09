@@ -1,5 +1,7 @@
 package com.obss.pokedex.domain.pokemon.pokemon.impl;
 
+import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
+import com.obss.pokedex.domain.authentication.user.api.UserService;
 import com.obss.pokedex.domain.pokemon.ability.impl.AbilityServiceImpl;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDetailDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
@@ -9,13 +11,12 @@ import com.obss.pokedex.domain.pokemon.pokemon.api.AddStatDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.domain.pokemon.pokemonstat.impl.PokemonStatServiceImpl;
-import com.obss.pokedex.domain.pokemon.stat.impl.Stat;
-import com.obss.pokedex.domain.pokemon.stat.impl.StatServiceImpl;
 import com.obss.pokedex.domain.pokemon.type.impl.TypeServiceImpl;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 @Log4j2
 public class PokemonServiceImpl implements PokemonService {
     private final PokeApiClient client;
@@ -34,7 +35,8 @@ public class PokemonServiceImpl implements PokemonService {
     private final PokemonRepository repository;
     private final TypeServiceImpl typeService;
     private final PokemonStatServiceImpl pokemonStatService;
-    private final StatServiceImpl statService;
+    private final UserRetrievalService userRetrievalService;
+    private final UserService userService;
     @PostConstruct
     public void init() {
         var totalCount = client.getPokemons(0, 100000).getCount();
@@ -151,6 +153,20 @@ public class PokemonServiceImpl implements PokemonService {
         Pokemon pokemon = repository.findById(id).orElseThrow(EntityNotFoundException::new);
         pokemon.getStats().remove(pokemonStatService.getPokemonStatByPokemonAndStat(statId));
         return toDto(repository.save(pokemon));
+    }
+
+    @Override
+    public Page<PokemonDto> getAllUserCatchlistPageable(Pageable pageable) {
+        var user = userRetrievalService.getCurrentUserId();
+        var catchlist = userService.getUserDtoById(user).getCatchList();
+        return repository.findAllByIdIn(catchlist,pageable).map(this::toDto);
+    }
+
+    @Override
+    public Page<PokemonDto> getAllUserWishlistPageable(Pageable pageable) {
+        var user = userRetrievalService.getCurrentUserId();
+        var wishlist = userService.getUserDtoById(user).getCatchList();
+        return repository.findAllByIdIn(wishlist,pageable).map(this::toDto);
     }
 
     private PokemonDto toDto(Pokemon pokemon) {
