@@ -196,7 +196,7 @@ public class PokemonServiceImpl implements PokemonService {
         int offset = 0;
         int limit = 20;
         int totalPokemons = client.getPokemons(offset,limit).getCount();
-        while (offset < totalPokemons) {
+        while (offset < 100) {
             GetPokemonDto response = client.getPokemons(offset, limit);
             allPokemons.addAll(response.getResults());
             offset += limit;
