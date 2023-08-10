@@ -1,4 +1,6 @@
-import PokemonDto;
+package com.obss.pokedex.domain.pokemon.pokemon.impl;
+
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
 import lombok.Builder;
 import lombok.Data;
 

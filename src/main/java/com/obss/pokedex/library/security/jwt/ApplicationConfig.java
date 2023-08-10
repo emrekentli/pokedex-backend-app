@@ -1,3 +1,5 @@
+package com.obss.pokedex.library.security.jwt;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

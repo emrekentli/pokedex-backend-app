@@ -1,3 +1,5 @@
+package com.obss.pokedex.library.rest;
+
 import java.util.List;
 import java.util.Objects;
 

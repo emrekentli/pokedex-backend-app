@@ -1,5 +1,7 @@
-import StatDto;
-import StatService;
+package com.obss.pokedex.domain.pokemon.stat.impl;
+
+import com.obss.pokedex.domain.pokemon.stat.api.StatDto;
+import com.obss.pokedex.domain.pokemon.stat.api.StatService;
 import com.obss.pokedex.library.rest.BaseController;
 import com.obss.pokedex.library.rest.MetaResponse;
 import com.obss.pokedex.library.rest.PageResponse;

@@ -1,5 +1,7 @@
-import PokemonStatDto;
-import StatDto;
+package com.obss.pokedex.domain.pokemon.pokemonstat.impl;
+
+import com.obss.pokedex.domain.pokemon.pokemonstat.api.PokemonStatDto;
+import com.obss.pokedex.domain.pokemon.stat.api.StatDto;
 import lombok.Builder;
 import lombok.Data;
 

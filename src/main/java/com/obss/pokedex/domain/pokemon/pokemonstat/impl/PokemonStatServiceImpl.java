@@ -1,10 +1,12 @@
-import GetStatDto;
-import AddStatDto;
-import Pokemon;
-import PokemonStatDto;
-import PokemonStatService;
-import Stat;
-import StatServiceImpl;
+package com.obss.pokedex.domain.pokemon.pokemonstat.impl;
+
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetStatDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.AddStatDto;
+import com.obss.pokedex.domain.pokemon.pokemon.impl.Pokemon;
+import com.obss.pokedex.domain.pokemon.pokemonstat.api.PokemonStatDto;
+import com.obss.pokedex.domain.pokemon.pokemonstat.api.PokemonStatService;
+import com.obss.pokedex.domain.pokemon.stat.impl.Stat;
+import com.obss.pokedex.domain.pokemon.stat.impl.StatServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,8 @@
-import GetPokemonDetailDto;
-import GetPokemonDto;
-import PokeApiClient;
+package com.obss.pokedex.domain.pokemon.pokeapi.impl;
+
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDetailDto;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeApiClient;
 import com.obss.pokedex.library.feign.PokeApiFeignCallableApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

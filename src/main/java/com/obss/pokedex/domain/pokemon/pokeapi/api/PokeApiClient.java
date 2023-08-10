@@ -1,3 +1,5 @@
+package com.obss.pokedex.domain.pokemon.pokeapi.api;
+
 public interface PokeApiClient {
     GetPokemonDto getPokemons(int offset, int limit);
 

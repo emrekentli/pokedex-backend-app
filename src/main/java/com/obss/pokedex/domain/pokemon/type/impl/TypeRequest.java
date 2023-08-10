@@ -1,5 +1,7 @@
+package com.obss.pokedex.domain.pokemon.type.impl;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import TypeDto;
+import com.obss.pokedex.domain.pokemon.type.api.TypeDto;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,15 +1,17 @@
+package com.obss.pokedex.domain.pokemon.pokemon.impl;
+
 import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
 import com.obss.pokedex.domain.authentication.user.api.UserService;
-import AbilityServiceImpl;
-import GetPokemonDetailDto;
-import GetPokemonDto;
-import PokeApiClient;
-import PokeNameDto;
-import AddStatDto;
-import PokemonDto;
-import PokemonService;
+import com.obss.pokedex.domain.pokemon.ability.impl.AbilityServiceImpl;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDetailDto;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeApiClient;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeNameDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.AddStatDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.domain.pokemon.pokemonstat.impl.PokemonStatServiceImpl;
-import TypeServiceImpl;
+import com.obss.pokedex.domain.pokemon.type.impl.TypeServiceImpl;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

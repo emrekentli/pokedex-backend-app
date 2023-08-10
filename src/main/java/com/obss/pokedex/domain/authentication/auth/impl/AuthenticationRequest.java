@@ -1,3 +1,5 @@
+package com.obss.pokedex.domain.authentication.auth.impl;
+
 import lombok.Builder;
 import lombok.Data;
 

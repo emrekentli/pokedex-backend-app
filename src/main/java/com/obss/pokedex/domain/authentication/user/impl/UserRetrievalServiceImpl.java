@@ -1,4 +1,6 @@
-import UserRetrievalService;
+package com.obss.pokedex.domain.authentication.user.impl;
+
+import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

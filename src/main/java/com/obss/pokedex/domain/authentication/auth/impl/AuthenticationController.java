@@ -1,4 +1,5 @@
-import AuthenticationService;
+package com.obss.pokedex.domain.authentication.auth.impl;
+import com.obss.pokedex.domain.authentication.auth.api.AuthenticationService;
 import com.obss.pokedex.domain.authentication.user.impl.UserRequest;
 import com.obss.pokedex.library.rest.BaseController;
 import com.obss.pokedex.library.rest.MetaResponse;

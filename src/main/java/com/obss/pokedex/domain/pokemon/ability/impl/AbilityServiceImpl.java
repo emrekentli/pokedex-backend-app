@@ -1,5 +1,7 @@
-import AbilityDto;
-import AbilityService;
+package com.obss.pokedex.domain.pokemon.ability.impl;
+
+import com.obss.pokedex.domain.pokemon.ability.api.AbilityDto;
+import com.obss.pokedex.domain.pokemon.ability.api.AbilityService;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetAbilityDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeApiClient;

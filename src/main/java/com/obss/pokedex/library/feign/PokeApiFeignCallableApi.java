@@ -1,5 +1,7 @@
-import GetPokemonDetailDto;
-import GetPokemonDto;
+package com.obss.pokedex.library.feign;
+
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDetailDto;
+import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;

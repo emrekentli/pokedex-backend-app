@@ -1,4 +1,5 @@
-import RoleDto;
+package com.obss.pokedex.domain.authentication.role.impl;
+import com.obss.pokedex.domain.authentication.role.api.RoleDto;
 import com.obss.pokedex.library.entity.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

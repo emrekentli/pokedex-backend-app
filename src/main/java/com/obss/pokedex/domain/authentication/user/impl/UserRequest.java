@@ -1,4 +1,6 @@
-import UserDto;
+package com.obss.pokedex.domain.authentication.user.impl;
+
+import com.obss.pokedex.domain.authentication.user.api.UserDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;

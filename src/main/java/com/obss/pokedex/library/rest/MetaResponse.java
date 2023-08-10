@@ -1,3 +1,5 @@
+package com.obss.pokedex.library.rest;
+
 public class MetaResponse {
 
     public static final String CODE_SUCCESS = "200";

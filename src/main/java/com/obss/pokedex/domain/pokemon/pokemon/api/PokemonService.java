@@ -1,3 +1,5 @@
+package com.obss.pokedex.domain.pokemon.pokemon.api;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

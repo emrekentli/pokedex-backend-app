@@ -1,4 +1,6 @@
-import TypeDto;
+package com.obss.pokedex.domain.pokemon.type.impl;
+
+import com.obss.pokedex.domain.pokemon.type.api.TypeDto;
 import lombok.Builder;
 import lombok.Data;
 

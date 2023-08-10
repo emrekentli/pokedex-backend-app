@@ -1,4 +1,6 @@
-import RoleDto;
+package com.obss.pokedex.domain.authentication.user.api;
+
+import com.obss.pokedex.domain.authentication.role.api.RoleDto;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,5 +1,7 @@
-import RoleDto;
-import RoleService;
+package com.obss.pokedex.domain.authentication.role.impl;
+
+import com.obss.pokedex.domain.authentication.role.api.RoleDto;
+import com.obss.pokedex.domain.authentication.role.api.RoleService;
 import com.obss.pokedex.library.util.PageUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

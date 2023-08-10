@@ -1,4 +1,6 @@
-import AbilityDto;
+package com.obss.pokedex.domain.pokemon.ability.impl;
+
+import com.obss.pokedex.domain.pokemon.ability.api.AbilityDto;
 import lombok.Builder;
 import lombok.Data;
 

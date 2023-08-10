@@ -1,3 +1,5 @@
+package com.obss.pokedex.domain.authentication.token.impl;
+
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

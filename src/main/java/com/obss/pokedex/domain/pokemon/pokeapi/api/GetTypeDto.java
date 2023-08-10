@@ -1,3 +1,5 @@
+package com.obss.pokedex.domain.pokemon.pokeapi.api;
+
 import lombok.Data;
 
 @Data

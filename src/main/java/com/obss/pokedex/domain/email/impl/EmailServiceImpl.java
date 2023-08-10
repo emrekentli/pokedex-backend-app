@@ -1,5 +1,7 @@
-import EmailDto;
-import EmailService;
+package com.obss.pokedex.domain.email.impl;
+
+import com.obss.pokedex.domain.email.api.EmailDto;
+import com.obss.pokedex.domain.email.api.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;

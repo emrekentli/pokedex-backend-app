@@ -1,4 +1,7 @@
-import Role;
+package com.obss.pokedex.domain.authentication.user.impl;
+
+
+import com.obss.pokedex.domain.authentication.role.impl.Role;
 import com.obss.pokedex.library.entity.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

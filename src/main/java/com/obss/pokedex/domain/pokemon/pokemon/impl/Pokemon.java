@@ -1,6 +1,9 @@
-import Ability;
+package com.obss.pokedex.domain.pokemon.pokemon.impl;
+
+
+import com.obss.pokedex.domain.pokemon.ability.impl.Ability;
 import com.obss.pokedex.domain.pokemon.pokemonstat.impl.PokemonStat;
-import Type;
+import com.obss.pokedex.domain.pokemon.type.impl.Type;
 import com.obss.pokedex.library.entity.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

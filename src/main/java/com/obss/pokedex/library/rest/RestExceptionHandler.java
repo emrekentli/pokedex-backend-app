@@ -1,3 +1,6 @@
+package com.obss.pokedex.library.rest;
+
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

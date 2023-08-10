@@ -1,14 +1,16 @@
-import RoleDto;
-import Role;
-import RoleServiceImpl;
-import UserDto;
-import UserRetrievalService;
-import UserRoleDto;
-import UserService;
-import EmailDto;
-import EmailService;
-import PokemonDto;
-import PokemonService;
+package com.obss.pokedex.domain.authentication.user.impl;
+
+import com.obss.pokedex.domain.authentication.role.api.RoleDto;
+import com.obss.pokedex.domain.authentication.role.impl.Role;
+import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
+import com.obss.pokedex.domain.authentication.user.api.UserDto;
+import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
+import com.obss.pokedex.domain.authentication.user.api.UserRoleDto;
+import com.obss.pokedex.domain.authentication.user.api.UserService;
+import com.obss.pokedex.domain.email.api.EmailDto;
+import com.obss.pokedex.domain.email.api.EmailService;
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
+import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
 import com.obss.pokedex.library.util.PageUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

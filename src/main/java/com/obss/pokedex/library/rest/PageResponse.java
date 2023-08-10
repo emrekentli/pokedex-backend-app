@@ -1,3 +1,5 @@
+package com.obss.pokedex.library.rest;
+
 import org.springframework.data.domain.Page;
 
 public class PageResponse<T> {
