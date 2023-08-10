@@ -103,7 +103,6 @@ public class PokemonController extends BaseController {
         return respond(PokemonResponse.toResponse(pokemon));
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-
     @DeleteMapping("/{id}/stats")
     public Response<PokemonResponse> removeStat(@PathVariable(name = "id") String id,@RequestParam(value = "statId") String statId) {
             PokemonDto pokemon = service.removeStat(id, statId);

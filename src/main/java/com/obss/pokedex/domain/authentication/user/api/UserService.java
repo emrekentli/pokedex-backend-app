@@ -28,4 +28,7 @@ public interface UserService {
 
     UserDto deletePokemonFromWishlist(String pokemonId);
 
+    UserDto addRoleToUser(UserRoleDto roleId);
+
+    UserDto removeRoleToUser(UserRoleDto dto);
 }

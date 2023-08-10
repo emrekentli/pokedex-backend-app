@@ -5,6 +5,7 @@ import com.obss.pokedex.domain.authentication.role.impl.Role;
 import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
 import com.obss.pokedex.domain.authentication.user.api.UserDto;
 import com.obss.pokedex.domain.authentication.user.api.UserRetrievalService;
+import com.obss.pokedex.domain.authentication.user.api.UserRoleDto;
 import com.obss.pokedex.domain.authentication.user.api.UserService;
 import com.obss.pokedex.domain.email.api.EmailDto;
 import com.obss.pokedex.domain.email.api.EmailService;
@@ -20,7 +21,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -161,6 +161,32 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    @Override
+    public UserDto addRoleToUser(UserRoleDto dto) {
+        var user = repository.findById(dto.getUserId()).orElseThrow(EntityNotFoundException::new);
+        var role = roleService.findRoleById(dto.getRoleId());
+        checkUserHasRole(user, role);
+        user.getRoles().add(role);
+        return toDto(repository.save(user));
+    }
+
+    @Override
+    public UserDto removeRoleToUser(UserRoleDto dto) {
+        var user = repository.findById(dto.getUserId()).orElseThrow(EntityNotFoundException::new);
+        var role = roleService.findRoleById(dto.getRoleId());
+        if(role.getName().equals("ROLE_ADMIN")){
+            throw new IllegalArgumentException("Admin role cannot be removed");
+        }
+        user.getRoles().remove(role);
+        return toDto(repository.save(user));
+    }
+
+    private void checkUserHasRole(User user, Role role) {
+        if (user.getRoles().contains(role)) {
+            throw new IllegalArgumentException("User has this role");
+        }
+    }
+
     public User getUserByUserName(String username) {
         return repository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("Kayıt bulunamadı"));
     }
@@ -186,7 +212,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
-        user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : roleService.getRolesByRoleNames(Set.of("ROLE_USER")));
+        user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : roleService.getByRoleEntityByName("ROLE_USER"));
         return user;
     }
 

@@ -1,5 +1,6 @@
 package com.obss.pokedex.domain.authentication.user.impl;
 import com.obss.pokedex.domain.authentication.user.api.UserDto;
+import com.obss.pokedex.domain.authentication.user.api.UserRoleDto;
 import com.obss.pokedex.domain.authentication.user.api.UserService;
 import com.obss.pokedex.library.rest.BaseController;
 import com.obss.pokedex.library.rest.MetaResponse;
@@ -67,7 +68,6 @@ public class UserController extends BaseController {
             @RequestParam(required = false) String phoneNumber,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) Boolean activity,
-
             Pageable pageable) {
 
         UserDto dto = UserDto.builder()
@@ -100,6 +100,18 @@ public class UserController extends BaseController {
     @DeleteMapping("/wish/{pokemonId}")
     public Response<UserResponse> deletePokemonFromWishlist(@PathVariable(value = "pokemonId") String pokemonId) {
         UserDto user = service.deletePokemonFromWishlist(pokemonId);
+        return respond(UserResponse.toResponse(user));
+    }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PostMapping("/roles")
+    public Response<UserResponse> addRoleToUser(@RequestBody UserRoleDto dto) {
+        UserDto user = service.addRoleToUser(dto);
+        return respond(UserResponse.toResponse(user));
+    }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @DeleteMapping("/roles")
+    public Response<UserResponse> removeRoleToUser(@RequestBody UserRoleDto dto) {
+        UserDto user = service.removeRoleToUser(dto);
         return respond(UserResponse.toResponse(user));
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")

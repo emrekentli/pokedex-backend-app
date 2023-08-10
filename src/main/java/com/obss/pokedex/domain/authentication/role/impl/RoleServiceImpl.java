@@ -46,6 +46,7 @@ public class RoleServiceImpl implements RoleService {
         repository.delete(repository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
+
     @Override
     public Page<RoleDto> getAllRolePageable(Pageable pageable) {
         return PageUtil.pageToDto(repository.findAll(pageable), Role::toDto);
@@ -74,5 +75,12 @@ public class RoleServiceImpl implements RoleService {
 
     public Set<Role>  getRolesByRoleNames(Set<String> roleNames) {
         return repository.findByNameIn(roleNames);
+    }
+
+    public Set<Role> getByRoleEntityByName(String roleUser) {
+        return Set.of(repository.findByName(roleUser).orElseThrow(EntityNotFoundException::new));
+    }
+    public Role findRoleById(String roleUser) {
+       return repository.findById(roleUser).orElseThrow(EntityNotFoundException::new);
     }
 }
