@@ -1,5 +1,3 @@
-package com.obss.pokedex.library.util;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 

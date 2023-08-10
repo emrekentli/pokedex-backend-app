@@ -1,6 +1,3 @@
-package com.obss.pokedex.domain.pokemon.type.impl;
-
-
 import com.obss.pokedex.library.entity.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

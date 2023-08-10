@@ -1,5 +1,3 @@
-package com.obss.pokedex.domain.pokemon.type.api;
-
 import lombok.Builder;
 import lombok.Data;
 

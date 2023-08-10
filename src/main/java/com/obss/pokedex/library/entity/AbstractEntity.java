@@ -1,6 +1,3 @@
-package com.obss.pokedex.library.entity;
-
-
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

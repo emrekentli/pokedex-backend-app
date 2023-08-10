@@ -1,7 +1,5 @@
-package com.obss.pokedex.domain.pokemon.ability.impl;
-
-import com.obss.pokedex.domain.pokemon.ability.api.AbilityDto;
-import com.obss.pokedex.domain.pokemon.ability.api.AbilityService;
+import AbilityDto;
+import AbilityService;
 import com.obss.pokedex.library.rest.BaseController;
 import com.obss.pokedex.library.rest.MetaResponse;
 import com.obss.pokedex.library.rest.PageResponse;

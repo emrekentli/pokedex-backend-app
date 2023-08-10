@@ -1,5 +1,4 @@
-package com.obss.pokedex.library.security.jwt;
-import com.obss.pokedex.domain.authentication.user.api.UserDto;
+import UserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

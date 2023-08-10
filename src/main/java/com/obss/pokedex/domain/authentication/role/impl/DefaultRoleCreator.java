@@ -1,7 +1,5 @@
-package com.obss.pokedex.domain.authentication.role.impl;
-
-import com.obss.pokedex.domain.authentication.role.api.RoleDto;
-import com.obss.pokedex.domain.authentication.role.api.RoleService;
+import RoleDto;
+import RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

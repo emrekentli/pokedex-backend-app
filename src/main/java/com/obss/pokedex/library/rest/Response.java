@@ -1,5 +1,3 @@
-package com.obss.pokedex.library.rest;
-
 public class Response<T> {
 
     private T data;

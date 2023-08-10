@@ -1,7 +1,5 @@
-package com.obss.pokedex.domain.pokemon.pokemon.impl;
-
-import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonDto;
-import com.obss.pokedex.domain.pokemon.pokemon.api.PokemonService;
+import PokemonDto;
+import PokemonService;
 import com.obss.pokedex.library.rest.*;
 import com.obss.pokedex.library.util.PageUtil;
 import jakarta.validation.Valid;
