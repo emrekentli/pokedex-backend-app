@@ -1,6 +1,4 @@
-package com.obss.pokedex.library.security.jwt;
-
-import com.obss.pokedex.domain.authentication.user.impl.UserRepository;
+import UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,5 +1,3 @@
-package com.obss.pokedex.library.rest;
-
 public enum ResponseCode {
     SUCCESS("200"),
     WARNING("1000"),

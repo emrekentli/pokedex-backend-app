@@ -1,5 +1,3 @@
-package com.obss.pokedex.domain.pokemon.type.impl;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,4 @@
-package com.obss.pokedex.library.security.jwt;
-
-import com.obss.pokedex.domain.authentication.user.impl.User;
+import User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
