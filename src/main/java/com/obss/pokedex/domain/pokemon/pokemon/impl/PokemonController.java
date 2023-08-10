@@ -19,7 +19,6 @@ import java.util.List;
 public class PokemonController extends BaseController {
     private final PokemonService service;
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-
     @PostMapping
     public Response<PokemonResponse> createPokemon(@Valid @RequestBody PokemonRequest request) {
         var pokemon = service.createPokemon(request.toDto());
@@ -116,8 +115,7 @@ public class PokemonController extends BaseController {
                                                                        @RequestParam(required = false) Double height,
                                                                        @RequestParam(required = false) Double weight,
                                                                        @RequestParam(required = false) String ability,
-                                                                       @RequestParam(required = false) Integer baseExperience,
-                                                                       Pageable pageable) {
+                                                                       @RequestParam(required = false) Integer baseExperience) {
         PokemonDto dto = PokemonDto.builder()
                 .name(name)
                 .height(height)

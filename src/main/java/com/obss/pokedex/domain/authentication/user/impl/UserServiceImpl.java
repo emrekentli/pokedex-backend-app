@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -109,19 +110,16 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkIfPokemonExistsInCatchlist(PokemonDto pokemon) {
-        var userx = repository.findById(userRetrievalService.getCurrentUserId())
-                .orElseThrow(EntityNotFoundException::new);
-
-        if (repository.findById(userRetrievalService.getCurrentUserId())
+        if (Boolean.TRUE.equals(repository.findById(userRetrievalService.getCurrentUserId())
                 .map(user -> user.getCatchList().contains(pokemon.getId()))
-                .orElseThrow(EntityNotFoundException::new)) {
+                .orElseThrow(EntityNotFoundException::new))) {
             throw new IllegalArgumentException("Pokemon already exists in catchlist");
         }
     }
     private void checkIfPokemonExistsInWishlist(PokemonDto pokemon) {
-        if (repository.findById(userRetrievalService.getCurrentUserId())
+        if (Boolean.TRUE.equals(repository.findById(userRetrievalService.getCurrentUserId())
                 .map(user -> user.getWishList().contains(pokemon.getId()))
-                .orElseThrow(EntityNotFoundException::new)) {
+                .orElseThrow(EntityNotFoundException::new))) {
             throw new IllegalArgumentException("Pokemon already exists in wishlist");
         }
     }
@@ -129,6 +127,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto addPokemonToWishlist(String pokemonId) {
         PokemonDto pokemon = pokemonService.getById(pokemonId);
+        checkIfPokemonExistsInWishlist(pokemon);
         return repository.findById(userRetrievalService.getCurrentUserId())
                 .map(user -> {
                     user.getWishList().add(pokemon.getId());
@@ -187,7 +186,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
-        user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : null);
+        user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : roleService.getRolesByRoleNames(Set.of("ROLE_USER")));
         return user;
     }
 
