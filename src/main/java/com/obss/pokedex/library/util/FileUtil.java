@@ -3,7 +3,6 @@ package com.obss.pokedex.library.util;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 public class FileUtil {
 
@@ -21,6 +20,6 @@ try {
 }
 
 
-        return convFile.getAbsolutePath();
+        return convFile.getPath();
     }
 }

@@ -25,13 +25,14 @@ public class DefaultUserCreator implements CommandLineRunner {
 
     private final UserRepository repository;
     private final RoleServiceImpl service;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void run(String... args) throws Exception {
         if (repository.findUserByUserName(username).isEmpty()) {
            var role =  service.getRolesByRoleNames(Set.of("ROLE_ADMIN"));
             User user = new User();
             user.setUserName(username);
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
             user.setEmail(email);
             user.setFullName("Admin");
             user.setRoles(role);

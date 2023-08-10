@@ -72,12 +72,6 @@ public class UserServiceImpl implements UserService {
                 .map(this::toDto);
     }
 
-    public User getUserById(String id) {
-        return repository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-    }
-
     @Override
     public UserDto getUserDtoById(String id) {
         return toDto(repository
@@ -168,14 +162,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public UserDto getCatchList() {
-        return repository.findById(userRetrievalService.getCurrentUserId())
-                .map(user -> {
-                    return toDto(user);
-                })
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
     public User getUserByUserName(String username) {
         return repository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("Kayıt bulunamadı"));
     }
@@ -196,7 +182,7 @@ public class UserServiceImpl implements UserService {
     }
     public User toEntity(User user, String password, UserDto dto) {
         user.setUserName(dto.getUserName());
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
@@ -206,7 +192,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private String randomPassword() {
-        //generate 6 digit random number
         int randomPIN = (int) (Math.random() * 900000) + 100000;
         return String.valueOf(randomPIN);
     }
