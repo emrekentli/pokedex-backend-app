@@ -1,6 +1,7 @@
 package com.obss.pokedex.domain.authentication.user.impl;
 
 import com.obss.pokedex.domain.authentication.role.api.RoleDto;
+import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
 import com.obss.pokedex.domain.authentication.user.api.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,19 +24,22 @@ public class DefaultUserCreator implements CommandLineRunner {
     private String password;
 
     private final UserRepository repository;
-    private final UserServiceImpl service;
+    private final RoleServiceImpl service;
     @Override
     public void run(String... args) throws Exception {
         if (repository.findUserByUserName(username).isEmpty()) {
-                    service.createUser(UserDto.builder()
-                            .userName(username)
-                            .password(password)
-                            .email(email)
-                            .fullName("Admin")
-                            .roles(Set.of(RoleDto.builder().name("ROLE_ADMIN").displayName("Admin Rolü").build()))
-                            .activity(true)
-                            .phoneNumber("1234567890")
-                            .build());
+           var role =  service.getRolesByRoleNames(Set.of("ROLE_ADMIN"));
+            User user = new User();
+            user.setUserName(username);
+            user.setPassword(password);
+            user.setEmail(email);
+            user.setFullName("Admin");
+            user.setRoles(role);
+            user.setActivity(true);
+            user.setPhoneNumber("1234567890");
+            user.setActivity(true);
+            repository.save(user);
+
         }
 
     }

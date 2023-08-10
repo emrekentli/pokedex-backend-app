@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto dto) {
         checkUserExists(dto.getEmail());
         String randomPassword =  randomPassword();
-        User user = toEntity(new User(),passwordEncoder.encode(randomPassword()), dto);
+        User user = toEntity(new User(), randomPassword, dto);
         emailService.sendEmail(EmailDto.builder()
                 .to(user.getEmail())
                 .subject("Welcome to Pokedex")
@@ -194,9 +194,9 @@ public class UserServiceImpl implements UserService {
         user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : null);
         return user;
     }
-    public User toEntity(User user, String encodedPassword, UserDto dto) {
+    public User toEntity(User user, String password, UserDto dto) {
         user.setUserName(dto.getUserName());
-        user.setPassword(encodedPassword);
+        user.setPassword(password);
         user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
