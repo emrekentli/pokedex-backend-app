@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,12 +20,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RoleController extends BaseController {
     private final RoleService service;
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PostMapping
     public Response<RoleResponse> createRole(@Valid @RequestBody RoleRequest request) {
         var role = service.createRole(request.toDto());
         return respond(RoleResponse.toResponse(role));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PutMapping("/{id}")
     public Response<RoleResponse> updateRole(@Valid @PathVariable(name = "id") String id,
@@ -32,17 +35,20 @@ public class RoleController extends BaseController {
         var role = service.updateRole(id, request.toDto());
         return respond(RoleResponse.toResponse(role));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @DeleteMapping("/{id}")
     public Response<Void> deleteRole(@PathVariable(name = "id") String id) {
         service.deleteRole(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @GetMapping
     public Response<PageResponse<RoleResponse>> getAllRoles(Pageable pageable) {
         return respond(toPageResponse(service.getAllRolePageable(pageable)));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @GetMapping("/filter")
     public Response<PageResponse<RoleResponse>> filterUser(

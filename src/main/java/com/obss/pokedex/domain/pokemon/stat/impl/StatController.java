@@ -19,31 +19,41 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class StatController extends BaseController {
     private final StatService service;
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @PostMapping
     public Response<StatResponse> createStat(@Valid @RequestBody StatRequest request) {
         var stat = service.createStat(request.toDto());
         return respond(StatResponse.toResponse(stat));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @PutMapping("/{id}")
     public Response<StatResponse> updateStat(@Valid @PathVariable(name = "id") String id,
                                              @RequestBody StatRequest request) {
         var stat = service.updateStat(id, request.toDto());
         return respond(StatResponse.toResponse(stat));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @DeleteMapping("/{id}")
     public Response<Void> deleteStat(@PathVariable(name = "id") String id) {
         service.deleteStat(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @GetMapping
     public Response<PageResponse<StatResponse>> getAll(Pageable pageable) {
         return respond(toPageResponse(service.getAll(pageable)));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @GetMapping("/{id}")
     public Response<StatResponse> getById(@PathVariable(value = "id") String id) {
         return respond(StatResponse.toResponse(service.getById(id)));
     }
+
     @GetMapping("/filter")
     public Response<PageResponse<StatResponse>> filterStats(
             @RequestParam(required = false) String name,

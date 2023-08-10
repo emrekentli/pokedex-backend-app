@@ -35,11 +35,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto createUser(UserDto dto) {
         checkUserExists(dto.getEmail());
-        User user = toEntity(new User(), dto);
+        String randomPassword =  randomPassword();
+        User user = toEntity(new User(),passwordEncoder.encode(randomPassword()), dto);
         emailService.sendEmail(EmailDto.builder()
                 .to(user.getEmail())
                 .subject("Welcome to Pokedex")
-                .text("Welcome to Pokedex!\n Your password is " + user.getPassword())
+                .text("Welcome to Pokedex!\n Your password is " + randomPassword)
                 .build());
         return toDto(repository.save(user));
     }
@@ -186,6 +187,16 @@ public class UserServiceImpl implements UserService {
     public User toEntity(User user, UserDto dto) {
         user.setUserName(dto.getUserName());
         user.setPassword(passwordEncoder.encode(randomPassword()));
+        user.setActivity(true);
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : null);
+        return user;
+    }
+    public User toEntity(User user, String encodedPassword, UserDto dto) {
+        user.setUserName(dto.getUserName());
+        user.setPassword(encodedPassword);
         user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());

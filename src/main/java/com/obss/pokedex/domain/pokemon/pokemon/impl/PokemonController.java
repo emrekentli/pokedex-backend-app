@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,12 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PokemonController extends BaseController {
     private final PokemonService service;
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PostMapping(consumes = {"multipart/form-data"})
     public Response<PokemonResponse> createPokemon(@Valid @RequestPart("data") PokemonRequest request, @RequestPart("file") MultipartFile file ) {
         var pokemon = service.createPokemon(request.toDto(), file);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PutMapping("/{id}")
     public Response<PokemonResponse> updatePokemon(@Valid @PathVariable(name = "id") String id,
@@ -31,11 +34,14 @@ public class PokemonController extends BaseController {
         var pokemon = service.updatePokemon(id, request.toDto());
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @DeleteMapping("/{id}")
     public Response<Void> deletePokemon(@PathVariable(name = "id") String id) {
         service.deletePokemon(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
+
     @GetMapping
     public Response<PageResponse<PokemonResponse>> getAll(Pageable pageable) {
         return respond(toPageResponse(service.getAll(pageable)));
@@ -63,36 +69,42 @@ public class PokemonController extends BaseController {
                 .build();
         return respond(toPageResponse(service.filterPokemons(dto, type,ability, pageable)));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PostMapping("/{id}/types")
     public Response<PokemonResponse> addType(@PathVariable(name = "id") String id,@RequestParam(value = "typeId") String typeId) {
         PokemonDto pokemon = service.addType(id, typeId);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @DeleteMapping("/{id}/types")
     public Response<PokemonResponse> removeType(@PathVariable(name = "id") String id,@RequestParam(value = "typeId") String typeId) {
         PokemonDto pokemon = service.removeType(id, typeId);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PostMapping("/{id}/abilities")
     public Response<PokemonResponse> addAbility(@PathVariable(name = "id") String id,@RequestParam(value = "abilityId") String abilityId) {
         PokemonDto pokemon = service.addAbility(id, abilityId);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @DeleteMapping("/{id}/abilities")
     public Response<PokemonResponse> removeAbility(@PathVariable(name = "id") String id,@RequestParam(value = "abilityId") String abilityId) {
         PokemonDto pokemon = service.removeAbility(id, abilityId);
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @PostMapping("/{id}/stats")
     public Response<PokemonResponse> addStat(@PathVariable(name = "id") String id,@RequestBody AddStatRequest request) {
         PokemonDto pokemon = service.addStat(id, request.toDto());
         return respond(PokemonResponse.toResponse(pokemon));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @DeleteMapping("/{id}/stats")
     public Response<PokemonResponse> removeStat(@PathVariable(name = "id") String id,@RequestParam(value = "statId") String statId) {

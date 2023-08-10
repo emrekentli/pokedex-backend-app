@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,11 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController extends BaseController {
     private final UserService service;
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping
     public Response<UserResponse> createUser(@Valid @RequestBody UserRequest request) {
         var user = service.createUser(request.toDto());
         return respond(UserResponse.toResponse(user));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @PutMapping("/{id}")
     public Response<UserResponse> updateUser(@Valid @PathVariable(name = "id") String id,
                                              @RequestBody UserRequest request) {
@@ -35,20 +39,27 @@ public class UserController extends BaseController {
         var user = service.updateMyUser(request.toDto());
         return respond(UserResponse.toResponse(user));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @DeleteMapping("/{id}")
     public Response<Void> deleteUser(@PathVariable(name = "id") String id) {
         service.deleteUser(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @GetMapping
     public Response<PageResponse<UserResponse>> getAllUser(Pageable pageable) {
         return respond(toPageResponse(service.getAllUserPageable(pageable)));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @GetMapping("/username/{userName}")
     public Response<UserResponse> getByUserName(@PathVariable(value = "userName") String userName) {
         return respond(UserResponse.toResponse(service.getByUserName(userName)));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @GetMapping("/filter")
     public Response<PageResponse<UserResponse>> filterUser(
             @RequestParam(required = false) String userName,
@@ -91,6 +102,7 @@ public class UserController extends BaseController {
         UserDto user = service.deletePokemonFromWishlist(pokemonId);
         return respond(UserResponse.toResponse(user));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @GetMapping("/{id}")
     public Response<UserResponse> getUserById(@PathVariable(value = "id") String id) {

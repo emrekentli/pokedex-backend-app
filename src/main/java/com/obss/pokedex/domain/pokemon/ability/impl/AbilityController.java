@@ -19,31 +19,41 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AbilityController extends BaseController {
     private final AbilityService service;
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @PostMapping
     public Response<AbilityResponse> createAbility(@Valid @RequestBody AbilityRequest request) {
         var ability = service.createAbility(request.toDto());
         return respond(AbilityResponse.toResponse(ability));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @PutMapping("/{id}")
     public Response<AbilityResponse> updateAbility(@Valid @PathVariable(name = "id") String id,
                                              @RequestBody AbilityRequest request) {
         var ability = service.updateAbility(id, request.toDto());
         return respond(AbilityResponse.toResponse(ability));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @DeleteMapping("/{id}")
     public Response<Void> deleteAbility(@PathVariable(name = "id") String id) {
         service.deleteAbility(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @GetMapping
     public Response<PageResponse<AbilityResponse>> getAll(Pageable pageable) {
         return respond(toPageResponse(service.getAll(pageable)));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
     @GetMapping("/{id}")
     public Response<AbilityResponse> getById(@PathVariable(value = "id") String id) {
         return respond(AbilityResponse.toResponse(service.getById(id)));
     }
+
     @GetMapping("/filter")
     public Response<PageResponse<AbilityResponse>> filterAbilites(
             @RequestParam(required = false) String name,
