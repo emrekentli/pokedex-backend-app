@@ -9,7 +9,6 @@ import com.obss.pokedex.domain.authentication.user.impl.UserRequest;
 import com.obss.pokedex.domain.authentication.user.impl.UserServiceImpl;
 import com.obss.pokedex.library.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

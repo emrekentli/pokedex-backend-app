@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,9 +20,9 @@ public class PokemonController extends BaseController {
     private final PokemonService service;
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 
-    @PostMapping(consumes = {"multipart/form-data"})
-    public Response<PokemonResponse> createPokemon(@Valid @RequestPart("data") PokemonRequest request, @RequestPart("file") MultipartFile file ) {
-        var pokemon = service.createPokemon(request.toDto(), file);
+    @PostMapping
+    public Response<PokemonResponse> createPokemon(@Valid @RequestBody PokemonRequest request) {
+        var pokemon = service.createPokemon(request.toDto());
         return respond(PokemonResponse.toResponse(pokemon));
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
