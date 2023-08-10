@@ -1,6 +1,4 @@
-package com.obss.pokedex.library.security.jwt;
-
-import com.obss.pokedex.domain.authentication.token.impl.TokenRepository;
+import TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

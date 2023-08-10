@@ -1,7 +1,5 @@
-package com.obss.pokedex.domain.pokemon.type.impl;
-
-import com.obss.pokedex.domain.pokemon.type.api.TypeDto;
-import com.obss.pokedex.domain.pokemon.type.api.TypeService;
+import TypeDto;
+import TypeService;
 import com.obss.pokedex.library.rest.BaseController;
 import com.obss.pokedex.library.rest.MetaResponse;
 import com.obss.pokedex.library.rest.PageResponse;

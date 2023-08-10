@@ -1,5 +1,3 @@
-package com.obss.pokedex.library.util;
-
 import java.util.Date;
 
 public class DateUtil {

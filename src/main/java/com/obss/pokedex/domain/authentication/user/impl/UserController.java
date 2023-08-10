@@ -1,7 +1,6 @@
-package com.obss.pokedex.domain.authentication.user.impl;
-import com.obss.pokedex.domain.authentication.user.api.UserDto;
-import com.obss.pokedex.domain.authentication.user.api.UserRoleDto;
-import com.obss.pokedex.domain.authentication.user.api.UserService;
+import UserDto;
+import UserRoleDto;
+import UserService;
 import com.obss.pokedex.library.rest.BaseController;
 import com.obss.pokedex.library.rest.MetaResponse;
 import com.obss.pokedex.library.rest.PageResponse;

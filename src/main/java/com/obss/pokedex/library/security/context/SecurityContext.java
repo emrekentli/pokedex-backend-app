@@ -1,5 +1,3 @@
-package com.obss.pokedex.library.security.context;
-
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

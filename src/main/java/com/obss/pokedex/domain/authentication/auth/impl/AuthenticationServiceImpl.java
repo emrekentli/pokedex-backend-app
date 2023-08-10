@@ -1,6 +1,4 @@
-package com.obss.pokedex.domain.authentication.auth.impl;
-
-import com.obss.pokedex.domain.authentication.auth.api.AuthenticationService;
+import AuthenticationService;
 import com.obss.pokedex.domain.authentication.role.impl.Role;
 import com.obss.pokedex.domain.authentication.role.impl.RoleServiceImpl;
 import com.obss.pokedex.domain.authentication.token.impl.TokenRepository;

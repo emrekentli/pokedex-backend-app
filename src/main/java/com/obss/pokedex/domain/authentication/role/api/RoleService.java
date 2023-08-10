@@ -1,5 +1,3 @@
-package com.obss.pokedex.domain.authentication.role.api;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

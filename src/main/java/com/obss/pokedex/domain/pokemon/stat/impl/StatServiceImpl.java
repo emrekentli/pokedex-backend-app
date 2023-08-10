@@ -1,10 +1,8 @@
-package com.obss.pokedex.domain.pokemon.stat.impl;
-
 import com.obss.pokedex.domain.pokemon.pokeapi.api.GetPokemonDto;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeApiClient;
 import com.obss.pokedex.domain.pokemon.pokeapi.api.PokeNameDto;
-import com.obss.pokedex.domain.pokemon.stat.api.StatDto;
-import com.obss.pokedex.domain.pokemon.stat.api.StatService;
+import StatDto;
+import StatService;
 import com.obss.pokedex.library.util.PageUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
